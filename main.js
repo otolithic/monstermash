@@ -1,8 +1,8 @@
 //define the canvas and attach it
 var canvas = document.createElement("canvas")
 document.body.appendChild(canvas)
-canvas.width=1000
-canvas.height=630
+canvas.width=document.body.getBoundingClientRect().width
+canvas.height=document.body.getBoundingClientRect().height
 //center the canvas on the page
 var marginLeft = document.body.getBoundingClientRect().width/2 - canvas.width/2
 canvas.style.marginLeft=`${marginLeft}px`
