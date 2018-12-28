@@ -75,7 +75,7 @@ function chooseFeats(maxfeats, features){
 }
 
 function chooseTexture(textures){
-    var texturenumber = Math.round(Math.random()*(textures.length-1))
+    var texturenumber = Math.floor(Math.random()*textures.length)
     t = textures[texturenumber]
     return t
 }

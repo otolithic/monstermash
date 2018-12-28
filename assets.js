@@ -89,17 +89,50 @@ hand1.src="Images/appendages/hand1.png"
 hand1.attachAt=[14,11]
 
 //textures (backgrounds, perhaps skins)
+var decopaper1 = new Image()
+decopaper1.src="Images/textures/decopaper1.jpg"
+
+var decopaper2 = new Image()
+decopaper2.src="Images/textures/decopaper2.jpg"
+
+var decopaper3 = new Image()
+decopaper3.src="Images/textures/decopaper3.jpg"
+
 var decopaper4 = new Image()
 decopaper4.src="Images/textures/decopaper4.jpg"
+
+var decopaper5 = new Image()
+decopaper5.src="Images/textures/decopaper5.jpg"
+
+var decopaper6 = new Image()
+decopaper6.src="Images/textures/decopaper6.jpg"
 
 var decopaper7 = new Image()
 decopaper7.src="Images/textures/decopaper7.jpg"
 
+var decopaper8 = new Image()
+decopaper8.src="Images/textures/decopaper8.jpg"
+
+var decopaper9 = new Image()
+decopaper9.src="Images/textures/decopaper9.jpg"
+
+var decopaper10 = new Image()
+decopaper10.src="Images/textures/decopaper10.jpg"
+
+var decopaper11 = new Image()
+decopaper11.src="Images/textures/decopaper11.jpg"
+
+var decopaper12 = new Image()
+decopaper12.src="Images/textures/decopaper12.jpg"
+
 var decopaper13 = new Image()
 decopaper13.src="Images/textures/decopaper13.jpg"
+
+var decopaper14 = new Image()
+decopaper14.src="Images/textures/decopaper14.png"
 
 //data structures
 var bodies = [kitty, armadillo, giraffe]
 var features = [eye1, mouth,valves,suriname]
 var appendages = [anemone, anemone2, anemone3,hand1]
-var textures = [decopaper4,decopaper7,decopaper13]
+var textures = [decopaper1,decopaper2,decopaper3,decopaper4,decopaper5,decopaper6,decopaper7,decopaper8,decopaper9,decopaper10,decopaper11,decopaper12,decopaper13,decopaper14]
