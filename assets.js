@@ -11,10 +11,11 @@ kitty.width = 300
 kitty.height=300
 kitty.hasAttachments = true
 kitty.attachments = [
-    [230,200,0,10],//left leg
+    [108,270,45,135],//tail
     [270,200,350,360],//right leg
-    [250,95,240,300],//head
-    [108,270,45,135]]//tail
+    [230,200,0,10],//left leg
+    [250,95,240,300]//head
+]
 
 var armadillo = new Image()
 armadillo.type = "body"
@@ -35,9 +36,9 @@ giraffe.height=376
 giraffe.hasAttachments=true
 giraffe.attachments = [
     [19,25,180,240],//head
-    [84,295,10,10],//front leg
-    [209,295,10,30],//back leg
-    [220,295,10,10]//other back leg
+    [230,295,10,10],//other back leg
+    [200,295,10,30],//back leg
+    [84,295,10,10]//front leg
 ]
 
 //features
@@ -76,7 +77,7 @@ anemone3.src="Images/appendages/anemone3.png"
 anemone3.width=300
 anemone3.attachAt = [40,54]
 
-var coral1 = new Image()
+var coral1 = new Image()    //omit; this one doesn't look good
 coral1.type = "appendage"
 coral1.src="Images/appendages/coral1.png"
 coral1.width = 150
@@ -87,6 +88,37 @@ var hand1 = new Image()
 hand1.type="appendage"
 hand1.src="Images/appendages/hand1.png"
 hand1.attachAt=[14,11]
+
+var hand2 = new Image()
+hand2.type="appendage"
+hand2.src="Images/appendages/hand2.png"
+hand2.attachAt=[15,25]
+
+var hand3 = new Image()
+hand3.type="appendage"
+hand3.src="Images/appendages/hand3.png"
+hand3.attachAt=[61,11]
+
+var frogleg = new Image()
+frogleg.type="appendage"
+frogleg.src="Images/appendages/frogleg.png"
+frogleg.width = frogleg.width*.75
+frogleg.height = frogleg.height*.75
+frogleg.attachAt=[189*.75,61*.75]
+
+var rocksucker = new Image() // work on this one
+rocksucker.type="appendage"
+rocksucker.src="Images/appendages/rocksucker.png"
+rocksucker.width = rocksucker.width*.5
+rocksucker.height = rocksucker.height*.5
+rocksucker.attachAt=[74*.5,160*.5]
+
+var fishtail = new Image()
+fishtail.type="appendage"
+fishtail.src="Images/appendages/fishtail.png"
+fishtail.width = fishtail.width*.8
+fishtail.height = fishtail.height*.8
+fishtail.attachAt=[63*.8,24*.8]
 
 //textures (backgrounds, perhaps skins)
 var decopaper1 = new Image()
@@ -134,5 +166,5 @@ decopaper14.src="Images/textures/decopaper14.png"
 //data structures
 var bodies = [kitty, armadillo, giraffe]
 var features = [eye1, mouth,valves,suriname]
-var appendages = [anemone, anemone2, anemone3,hand1]
+var appendages = [anemone, anemone2, anemone3,hand1,hand2,hand3,frogleg,fishtail]
 var textures = [decopaper1,decopaper2,decopaper3,decopaper4,decopaper5,decopaper6,decopaper7,decopaper8,decopaper9,decopaper10,decopaper11,decopaper12,decopaper13,decopaper14]

@@ -71,7 +71,7 @@ function chooseFeats(maxfeats, features){
      //use getIdxList to choose this number of appendages and features. limblist and featlist should be arrays of images
     featlist = getIdxList(numfeatures,features)
     
-    return featlist;
+    return featlist
 }
 
 function chooseTexture(textures){
@@ -86,7 +86,7 @@ function chooseTexture(textures){
 function render(){
     console.log("in render")
     
-    //choose the background texture
+    //draw background
     var bg = chooseTexture(textures)
     context.drawImage(bg,0,0)
     
@@ -129,8 +129,8 @@ function render(){
         feat = f[i]
         
         //randomize x and y coords based on image size
-        xloc = Math.round(Math.random()*(parts[0].width-feat.width))+canvas.width/2-parts[0].width/2
-        yloc = Math.round(Math.random()*(parts[0].height-feat.height))+canvas.height/2-parts[0].height/2
+        xloc = Math.round(Math.random()*(b.width-feat.width))+canvas.width/2-b.width/2
+        yloc = Math.round(Math.random()*(b.height-feat.height))+canvas.height/2-b.height/2
         angle = Math.random()*180-90
         axisX = feat.width/2
         axisY = feat.width/2
@@ -152,38 +152,38 @@ function render(){
     //    
     //    
 
-function drawPart(p, angle, targetPointX,targetPointY)
-{
-    console.log("in drawPart")
-    //puts the image at the given point
-    
-        if (p.type=="appendage"){
-            atX = p.attachAt[0]
-            atY = p.attachAt[1]
-            w = p.width
-            h = p.height
-        }
-        else if (p.type=="feature"){
-            atX = 0;
-            atY = 0;
-            r = Math.random()*0.5+0.5
-            w = p.width*r
-            h = p.height*r
-        }
-        else {
-            atX = 0;
-            atY = 0;
-            w = p.width
-            h = p.height
-        }
-       context.translate(targetPointX+atX,targetPointY+atY)
-        context.rotate(angle)
-        console.log(p)
-        console.log(p.type)
-        console.log(context.globalCompositeOperation)
-        context.drawImage(p, -atX,-atY,w,h)
-        
-        context.setTransform(1, 0, 0, 1, 0, 0);
-    
-}
+    function drawPart(p, angle, targetPointX,targetPointY)
+    {
+        console.log("in drawPart")
+        //puts the image at the given point
+
+            if (p.type=="appendage"){
+                atX = p.attachAt[0]
+                atY = p.attachAt[1]
+                w = p.width
+                h = p.height
+            }
+            else if (p.type=="feature"){
+                atX = 0;
+                atY = 0;
+                r = Math.random()*0.5+0.5
+                w = p.width*r
+                h = p.height*r
+            }
+            else {
+                atX = 0;
+                atY = 0;
+                w = p.width
+                h = p.height
+            }
+           context.translate(targetPointX+atX,targetPointY+atY)
+            context.rotate(angle)
+            console.log(p)
+            console.log(p.type)
+            console.log(context.globalCompositeOperation)
+            context.drawImage(p, -atX,-atY,w,h)
+
+            context.setTransform(1, 0, 0, 1, 0, 0);
+
+    }
 }//end render fxn
