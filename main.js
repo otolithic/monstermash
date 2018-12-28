@@ -32,30 +32,48 @@ promise.then(function(result){
     console.log("result", result)
 })
 
+function getIdxList(num,array){
+    var idxlist = []
+
+    for (var i = 0; i < num; i++){
+        idx = Math.floor(Math.random()*array.length)
+        idxlist = idxlist.concat(array[idx])
+    }
+    
+    return idxlist
+}
+
+function chooseParts(bodies, features, appendages){
+    //generate which parts to use
+    
+    var bodynumber = Math.round(Math.random()*(bodies.length-1))
+
+    numlimbs = bodies[bodynumber].attachments.length
+    maxfeats = 3
+    numfeatures = Math.round(Math.random()*maxfeats)
+
+    limblist = getIdxList(numlimbs,appendages)
+    featlist = getIdxList(numfeatures,features)
+
+    //put the parts in an array with the body first
+    var parts = [bodies[bodynumber]]
+
+    for (var i = 0; i < featlist.length; i++){
+        parts = parts.concat(featlist[i])
+    }
+    for (var i = 0; i < limblist.length; i++){
+        parts = parts.concat(limblist[i])
+    }
+
+    return parts;
+}
+
 function render(){
     console.log("in render")
     var bg = decopaper4
     context.drawImage(bg,0,0)
-//generate which parts to use
-
-var bodynumber = Math.round(Math.random()*(bodies.length-1))
-
-numlimbs = bodies[bodynumber].attachments.length
-maxfeats = 3
-numfeatures = Math.round(Math.random()*maxfeats)
-
-limblist = getIdxList(numlimbs,appendages)
-featlist = getIdxList(numfeatures,features)
-
-//put the parts in an array with the body first
-var parts = [bodies[bodynumber]]
-
-for (var i = 0; i < featlist.length; i++){
-    parts = parts.concat(featlist[i])
-}
-for (var i = 0; i < limblist.length; i++){
-    parts = parts.concat(limblist[i])
-}
+    
+    parts = chooseParts(bodies, features, appendages)
 
 //iterate and display the parts
 jointnum = 0;
@@ -149,16 +167,5 @@ function drawPart(img, angle, targetPointX,targetPointY)
         
         context.setTransform(1, 0, 0, 1, 0, 0);
     
-}
-
-function getIdxList(num,array){
-    var idxlist = []
-
-    for (var i = 0; i < num; i++){
-        idx = Math.floor(Math.random()*array.length)
-        idxlist = idxlist.concat(array[idx])
-    }
-    
-    return idxlist
 }
 }//end render fxn
