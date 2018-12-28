@@ -74,23 +74,10 @@ function chooseFeats(maxfeats, features){
     return featlist;
 }
 
-//generates which parts to use
-function chooseParts(bodies, features, appendages){
-    b = chooseBody(bodies)
-    l = chooseLimbs(b, appendages)
-    f = chooseFeats (3, features)
-
-    //put the parts in an array with the body first
-    var parts = [b]
-
-    for (var i = 0; i < f.length; i++){
-        parts = parts.concat(f[i])
-    }
-    for (var i = 0; i < l.length; i++){
-        parts = parts.concat(l[i])
-    }
-
-    return parts;
+function chooseTexture(textures){
+    var texturenumber = Math.round(Math.random()*(textures.length-1))
+    t = textures[texturenumber]
+    return t
 }
 
 /******************************************************\
@@ -100,7 +87,7 @@ function render(){
     console.log("in render")
     
     //choose the background texture
-    var bg = decopaper4
+    var bg = chooseTexture(textures)
     context.drawImage(bg,0,0)
     
     //choose the parts    

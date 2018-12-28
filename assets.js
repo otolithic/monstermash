@@ -102,4 +102,4 @@ decopaper13.src="Images/textures/decopaper13.jpg"
 var bodies = [kitty, armadillo, giraffe]
 var features = [eye1, mouth,valves,suriname]
 var appendages = [anemone, anemone2, anemone3,hand1]
-var textures = [decopaper4,decopaper7]
+var textures = [decopaper4,decopaper7,decopaper13]
