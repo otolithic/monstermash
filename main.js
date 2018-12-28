@@ -32,138 +32,169 @@ promise.then(function(result){
     console.log("result", result)
 })
 
+//chooses a given amount (num) of items from a given list (array)
 function getIdxList(num,array){
     var idxlist = []
 
     for (var i = 0; i < num; i++){
+        //generate a random index within the array
         idx = Math.floor(Math.random()*array.length)
+        
+        //add the item at this index to a list
         idxlist = idxlist.concat(array[idx])
     }
     
     return idxlist
 }
 
-function chooseParts(bodies, features, appendages){
-    //generate which parts to use
-    
+function chooseBody(bodies){
+    //pick a random number from the available number of body templates
     var bodynumber = Math.round(Math.random()*(bodies.length-1))
+    b = bodies[bodynumber]
+    return b
+}
 
-    numlimbs = bodies[bodynumber].attachments.length
-    maxfeats = 3
-    numfeatures = Math.round(Math.random()*maxfeats)
-
+function chooseLimbs(b, appendages){
+    //use this body's number of available joints to determine how many limbs to add
+    numlimbs =  b.attachments.length
+    
+    //use getIdxList to choose this number of appendages and features. limblist and featlist should be arrays of images
     limblist = getIdxList(numlimbs,appendages)
+    
+    return limblist
+}
+
+function chooseFeats(maxfeats, features){
+    //choose a random number of "features" to place between 0 and a maximum number (suggested: 3)
+    numfeatures = Math.round(Math.random()*maxfeats)
+    
+     //use getIdxList to choose this number of appendages and features. limblist and featlist should be arrays of images
     featlist = getIdxList(numfeatures,features)
+    
+    return featlist;
+}
+
+//generates which parts to use
+function chooseParts(bodies, features, appendages){
+    b = chooseBody(bodies)
+    l = chooseLimbs(b, appendages)
+    f = chooseFeats (3, features)
 
     //put the parts in an array with the body first
-    var parts = [bodies[bodynumber]]
+    var parts = [b]
 
-    for (var i = 0; i < featlist.length; i++){
-        parts = parts.concat(featlist[i])
+    for (var i = 0; i < f.length; i++){
+        parts = parts.concat(f[i])
     }
-    for (var i = 0; i < limblist.length; i++){
-        parts = parts.concat(limblist[i])
+    for (var i = 0; i < l.length; i++){
+        parts = parts.concat(l[i])
     }
 
     return parts;
 }
 
+/******************************************************\
+            THIS IS WHERE IT ALL HAPPENS
+\******************************************************/
 function render(){
     console.log("in render")
+    
+    //choose the background texture
     var bg = decopaper4
     context.drawImage(bg,0,0)
     
-    parts = chooseParts(bodies, features, appendages)
-
-//iterate and display the parts
-jointnum = 0;
-for (var i = 0; i < parts.length; i++){
-    img = parts[i]
+    //choose the parts    
+    b = chooseBody(bodies)
+    l = chooseLimbs(b, appendages)
+    f = chooseFeats (3, features)
+    
     //instantiate body position
-    if (i == 0) {
-        xref = canvas.width/2-img.width/2
-        yref = canvas.height/2-img.height/2
-        xloc = xref
-        yloc = yref
-        angle = 0
-        axisX = img.width/2
-        axisY = img.width/2
+    xref = canvas.width/2-b.width/2
+    yref = canvas.height/2-b.height/2
+    xloc = xref
+    yloc = yref
+    angle = 0
+    axisX = b.width/2
+    axisY = b.width/2
+    
+    drawPart(b, angle*Math.PI/180, xloc, yloc)
+    
+    //select limb placement
+    jointnum = 0;
+    for (var i = 0; i < l.length; i++){
+        limb = l[i]
+        joint = b.attachments[jointnum]
+
+        xloc = xref + joint[0] - limb.attachAt[0]
+        yloc = yref + joint[1] - limb.attachAt[1]
+
+        angle = Math.random()*(joint[3]-joint[2])+joint[2]
+        axisX = limb.attachAt[0]
+        axisY = limb.attachAt[1]
+        
+        jointnum++
+        
+        drawPart(limb, angle*Math.PI/180, xloc, yloc)
     }
     
     //select feature placement
-    else {
-        if (parts[0].hasAttachments && img.type == "appendage"){
-            jointnum++
-            if (jointnum>=parts[0].attachments.length)
-                jointnum = 0
-            joint = parts[0].attachments[jointnum]
-            
-            xloc = xref + joint[0] - img.attachAt[0]
-            yloc = yref + joint[1] - img.attachAt[1]
-            
-            angle = Math.random()*(joint[3]-joint[2])+joint[2]
-            axisX = img.attachAt[0]
-            axisY = img.attachAt[1]
-        }
-        else {
-            //randomize x and y coords based on image size
-            xloc = Math.round(Math.random()*(parts[0].width-img.width))+canvas.width/2-parts[0].width/2
-            yloc = Math.round(Math.random()*(parts[0].height-img.height))+canvas.height/2-parts[0].height/2
-            angle = Math.random()*180-90
-            axisX = img.width/2
-            axisY = img.width/2
-        }
-    }    
-    
-    drawPart(img, angle*Math.PI/180, xloc, yloc)
-    console.log(context.globalCompositeOperation)
+    for (var i=0; i<f.length; i++){
+        feat = f[i]
         
-//    //uncomment to check joint locations
-//    
-//    if (img.hasAttachments){
-//        for (var a = 0; a < img.attachments.length; a++){
-//            joint = img.attachments[a]
-//            rectx = xloc + joint[0]
-//            recty = yloc + joint[1]
-//            context.fillStyle="red"
-//            context.fillRect(rectx,recty,10,10)
-//        }
-//    }
-//    
-//    
-}
+        //randomize x and y coords based on image size
+        xloc = Math.round(Math.random()*(parts[0].width-feat.width))+canvas.width/2-parts[0].width/2
+        yloc = Math.round(Math.random()*(parts[0].height-feat.height))+canvas.height/2-parts[0].height/2
+        angle = Math.random()*180-90
+        axisX = feat.width/2
+        axisY = feat.width/2
+        
+        drawPart(feat, angle*Math.PI/180, xloc, yloc)
+    }
+    
+    //    //uncomment to check joint locations, replace img with limb or feat
+    //    
+    //    if (img.hasAttachments){
+    //        for (var a = 0; a < img.attachments.length; a++){
+    //            joint = img.attachments[a]
+    //            rectx = xloc + joint[0]
+    //            recty = yloc + joint[1]
+    //            context.fillStyle="red"
+    //            context.fillRect(rectx,recty,10,10)
+    //        }
+    //    }
+    //    
+    //    
 
-
-function drawPart(img, angle, targetPointX,targetPointY)
+function drawPart(p, angle, targetPointX,targetPointY)
 {
     console.log("in drawPart")
     //puts the image at the given point
     
-        if (img.type=="appendage"){
-            atX = img.attachAt[0]
-            atY = img.attachAt[1]
-            w = img.width
-            h = img.height
+        if (p.type=="appendage"){
+            atX = p.attachAt[0]
+            atY = p.attachAt[1]
+            w = p.width
+            h = p.height
         }
-        else if (img.type=="feature"){
+        else if (p.type=="feature"){
             atX = 0;
             atY = 0;
             r = Math.random()*0.5+0.5
-            w = img.width*r
-            h = img.height*r
+            w = p.width*r
+            h = p.height*r
         }
         else {
             atX = 0;
             atY = 0;
-            w = img.width
-            h = img.height
+            w = p.width
+            h = p.height
         }
        context.translate(targetPointX+atX,targetPointY+atY)
         context.rotate(angle)
-        console.log(img)
-        console.log(img.type)
+        console.log(p)
+        console.log(p.type)
         console.log(context.globalCompositeOperation)
-        context.drawImage(img, -atX,-atY,w,h)
+        context.drawImage(p, -atX,-atY,w,h)
         
         context.setTransform(1, 0, 0, 1, 0, 0);
     
