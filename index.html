@@ -1,6 +1,31 @@
+<!DOCTYPE html>
 <html>
+<head>
+    <title>Monster Mash</title>
+    <style>
+        #loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            color: white;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        body {
+            background: black;
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
 <body>
+    <div id="loading">Loading...</div>
     <script src="assets.js"></script>
     <script src="main.js"></script>
-    </body>
+</body>
 </html>
